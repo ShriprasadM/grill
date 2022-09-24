@@ -3,15 +3,23 @@ package grillmysql
 import (
 	"context"
 	"database/sql"
+
 	"github.com/swiggy-private/grill/canned"
 )
 
 type Mysql struct {
-	mysql *canned.Mysql
+	mysql   *canned.Mysql
+	version string
 }
 
 func (gm *Mysql) Start(ctx context.Context) error {
-	mysql, err := canned.NewMysql(ctx)
+	var mysql = new(canned.Mysql)
+	var err error
+	if gm.version == "" {
+		mysql, err = canned.NewMysql(ctx)
+	} else {
+		mysql, err = canned.NewMysql8(ctx)
+	}
 	if err != nil {
 		return err
 	}

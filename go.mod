@@ -1,4 +1,4 @@
-module github.com/ShriprasadM/grill
+module github.com/swiggy-private/grill
 
 go 1.13
 
