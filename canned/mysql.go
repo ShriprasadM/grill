@@ -23,14 +23,7 @@ type Mysql struct {
 	Client   *sql.DB
 }
 
-func NewMysql8(ctx context.Context) (*Mysql, error) {
-	return newMysql(ctx, "8.0")
-}
-
-func NewMysql(ctx context.Context) (*Mysql, error) {
-	return newMysql(ctx, "5.6")
-}
-func newMysql(ctx context.Context, version string) (*Mysql, error) {
+func NewMysql(ctx context.Context, version string) (*Mysql, error) {
 	os.Setenv("TC_HOST", "localhost")
 	req := testcontainers.ContainerRequest{
 		Image:        "mysql:" + version,

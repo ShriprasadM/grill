@@ -9,17 +9,14 @@ import (
 
 type Mysql struct {
 	mysql   *canned.Mysql
-	version string
+	Version string
 }
 
 func (gm *Mysql) Start(ctx context.Context) error {
-	var mysql = new(canned.Mysql)
-	var err error
-	if gm.version == "" {
-		mysql, err = canned.NewMysql(ctx)
-	} else {
-		mysql, err = canned.NewMysql8(ctx)
+	if gm.Version == "" {
+		gm.Version = "5.6"
 	}
+	mysql, err := canned.NewMysql(ctx, gm.Version)
 	if err != nil {
 		return err
 	}
