@@ -23,10 +23,17 @@ type Mysql struct {
 	Client   *sql.DB
 }
 
+func NewMysql8(ctx context.Context) (*Mysql, error) {
+	return newMysql(ctx, "8.0")
+}
+
 func NewMysql(ctx context.Context) (*Mysql, error) {
+	return newMysql(ctx, "5.6")
+}
+func newMysql(ctx context.Context, version string) (*Mysql, error) {
 	os.Setenv("TC_HOST", "localhost")
 	req := testcontainers.ContainerRequest{
-		Image:        "mysql:5.6",
+		Image:        "mysql:" + version,
 		ExposedPorts: []string{"3306/tcp"},
 		WaitingFor:   wait.ForListeningPort("3306"),
 		Env: map[string]string{
